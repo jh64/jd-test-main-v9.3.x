@@ -167,6 +167,7 @@ spring:
 
 server:
   servlet:
+    context-path: /jd-test-base/
     session:
       cookie:
         http-only: true

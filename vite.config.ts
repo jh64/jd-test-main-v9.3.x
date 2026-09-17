@@ -12,6 +12,7 @@ const webappDir = fileURLToPath(new URL('./src/main/webapp/', import.meta.url));
 const development = process.env.NODE_ENV !== 'production';
 
 const config = defineConfig({
+  base: '/jd-test-base/',
   plugins: [
     react(),
     viteStaticCopy({
@@ -74,7 +75,13 @@ const config = defineConfig({
     host: true,
     port: 9000,
     proxy: Object.fromEntries(
-      ['/api', '/services', '/management', '/v3/api-docs', '/h2-console'].map(res => [
+      [
+        '/jd-test-base/api',
+        '/jd-test-base/services',
+        '/jd-test-base/management',
+        '/jd-test-base/v3/api-docs',
+        '/jd-test-base/h2-console',
+      ].map(res => [
         res,
         {
           target: 'http://localhost:8080',
