@@ -1,0 +1,21 @@
+entity JdTest {
+    id Long required unique
+    name String required
+    classification String required
+    nodeId Long required
+    node String required
+    code Integer
+	codeDescription String required
+}
+
+relationship ManyToOne {
+  JdTest{parent(id)} to JdTest{child(id)}
+}
+
+service JdTest with serviceImpl
+service JdTest with serviceClass
+dto JdTest with mapstruct
+filter JdTest
+paginate JdTest with pagination
+
+search JdTest with no

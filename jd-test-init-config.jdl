@@ -1,0 +1,15 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName jdTest
+    buildTool maven
+    clientFramework react
+    databaseType sql
+    devDatabaseType h2Disk
+    enableHibernateCache true
+    packageName com.mycompany.myapp
+    prodDatabaseType oracle
+    withAdminUi false
+  }
+}
