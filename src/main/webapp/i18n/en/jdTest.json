@@ -1,0 +1,31 @@
+{
+  "jdTestApp": {
+    "jdTest": {
+      "home": {
+        "title": "Jd Tests",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Jd Test",
+        "createOrEditLabel": "Create or edit a Jd Test",
+        "notFound": "No Jd Tests found"
+      },
+      "created": "A new Jd Test is created with identifier {{ param }}",
+      "updated": "A Jd Test is updated with identifier {{ param }}",
+      "deleted": "A Jd Test is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Jd Test {{ id }}?"
+      },
+      "detail": {
+        "title": "Jd Test"
+      },
+      "id": "Id",
+      "name": "Name",
+      "classification": "Classification",
+      "nodeId": "Node Id",
+      "node": "Node",
+      "code": "Code",
+      "codeDescription": "Code Description",
+      "parent": "Parent",
+      "child": "Child"
+    }
+  }
+}
