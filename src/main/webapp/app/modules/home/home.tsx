@@ -1,27 +1,131 @@
 import './home.scss';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Col, Row } from 'react-bootstrap';
 import { Translate } from 'react-jhipster';
 import { Link } from 'react-router';
 
 import { useAppSelector } from 'app/config/store';
 
+import { Autocomplete } from '@ag.ds-next/react/autocomplete';
+import { Checkbox } from '@ag.ds-next/react/checkbox';
+import { ControlGroup } from '@ag.ds-next/react/control-group';
+
+// For the simulated async API request - loadOptions()
+import { DefaultComboboxOption } from '@ag.ds-next/react/combobox';
+// export type DefaultComboboxOption = { label: string; value: string };
+
+export const AutocompleteExample = () => {
+  const [value, setValue] = useState(null);
+  const resolveCountryOptionListForPromise = [
+    { label: 'Australia', value: 'Australia - value' },
+    { label: 'Canada', value: 'Canada - value' },
+    { label: 'Japan', value: 'Japan - value' },
+  ];
+
+  return (
+    <Autocomplete
+      label="Find your country"
+      hint="Start typing to get a list of country prompt for selection"
+      value={value}
+      onChange={setValue}
+      loadOptions={async function loadOptions() {
+        // Simulate an asynchronous API request
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        return resolveCountryOptionListForPromise;
+      }}
+    />
+  );
+};
+
+export const CheckboxExample = () => {
+  // State for a single controlled checkbox
+  const [isAccepted, setIsAccepted] = useState(false);
+
+  // State for tracking grouped checkboxes
+  const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
+
+  const handleSingleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAccepted(event.target.checked);
+  };
+
+  return (
+    <div style={{ padding: '2rem' }}>
+      {/* Single Controlled Checkbox */}
+      <div style={{ marginBottom: '2rem' }}>
+        <Checkbox checked={isAccepted} onChange={handleSingleChange} name="I agree to the terms and conditions" />
+        <p>Current Status: {isAccepted ? 'Checked' : 'Unchecked'}</p>
+      </div>
+
+      {/* Grouped Checkboxes */}
+      <ControlGroup label="Select your devices" hint="Please select all that apply" block>
+        <Checkbox
+          value="phone"
+          checked={selectedDevices.includes('phone')}
+          onChange={e => {
+            setSelectedDevices(e.target.checked ? [...selectedDevices, 'phone'] : selectedDevices.filter(d => d !== 'phone'));
+          }}
+        >
+          Phone
+        </Checkbox>
+        <Checkbox
+          value="tablet"
+          checked={selectedDevices.includes('tablet')}
+          onChange={e => {
+            setSelectedDevices(e.target.checked ? [...selectedDevices, 'tablet'] : selectedDevices.filter(d => d !== 'tablet'));
+          }}
+        >
+          Tablet
+        </Checkbox>
+        <Checkbox
+          value="laptop"
+          checked={selectedDevices.includes('laptop')}
+          onChange={e => {
+            setSelectedDevices(e.target.checked ? [...selectedDevices, 'laptop'] : selectedDevices.filter(d => d !== 'laptop'));
+          }}
+        >
+          Laptop
+        </Checkbox>
+      </ControlGroup>
+    </div>
+  );
+};
+
 export const Home = () => {
   const account = useAppSelector(state => state.authentication.account);
 
   return (
     <Row>
-      <Col md="3" className="pad">
-        <span className="hipster rounded" />
-      </Col>
       <Col md="9">
-        <h1 className="display-4">
-          <Translate contentKey="home.title">Welcome, Java Hipster!</Translate>
-        </h1>
-        <p className="lead">
-          <Translate contentKey="home.subtitle">This is your homepage</Translate>
-        </p>
+        <div>
+          <h3>DAFF React component library - Autocomplete sample</h3>
+        </div>
+        <AutocompleteExample />
+      </Col>
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+      <p />
+
+      <Col md="9">
+        <div>
+          <h3>DAFF React component library - Checkbox sample</h3>
+        </div>
+        <CheckboxExample />
+      </Col>
+
+      <Col md="9">
+        <div>
+          <h3>JHipster original</h3>
+        </div>
         {account?.login ? (
           <div>
             <Alert variant="success">
@@ -53,45 +157,6 @@ export const Home = () => {
             </Alert>
           </div>
         )}
-        <p>
-          <Translate contentKey="home.question">If you have any questions on JHipster:</Translate>
-        </p>
-
-        <ul>
-          <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.homepage">JHipster homepage</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.stackoverflow">JHipster on Stack Overflow</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.bugtracker">JHipster bug tracker</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.chat">JHipster public chat room</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.follow">follow @jhipster on Twitter</Translate>
-            </a>
-          </li>
-        </ul>
-
-        <p>
-          <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          !
-        </p>
       </Col>
     </Row>
   );
