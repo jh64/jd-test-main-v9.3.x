@@ -7,15 +7,15 @@ The bug: it incorrectly used window.location.href. And it crashed (getting a bla
 The bug fix can be found on this PR:
 https://github.com/jhipster/generator-jhipster/pull/35007
 
+Some quick samples of using [DAFF React lib](https://github.com/agriculturegovau/agds-next) can be found in src/main/webapp/app/modules/home/home.tsx, on the branch: daff-react-lib.
+
+![](./image/Screenshot-2026-10-05.190616.png)
+
 <details>
 <summary>Click here to see more samples</summary>
 
 Some quick samples of tree view (CodeSelectionTree) can be found in src/main/webapp/app/modules/home/home.tsx, on the branch: selection-on-tree-view.
 
 ![](./image/Screenshot-2026-10-04.222934.png)
-
-Some quick samples of using [DAFF React lib](https://github.com/agriculturegovau/agds-next) can be found in src/main/webapp/app/modules/home/home.tsx, on the branch: daff-react-lib.
-
-![](./image/Screenshot-2026-10-04.212629.png)
 
 </details>
