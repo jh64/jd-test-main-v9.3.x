@@ -47,9 +47,9 @@ const printImageFromTable = (firstTable): string => {
 
   // construct the image for printing/rendering
   let imageStringFull = '';
-  for (let x = 2; x > -1; x--) {
+  for (let x = rows - 1; x > -1; x--) {
     let imageString = '';
-    for (let y = 0; y < 4; y++) {
+    for (let y = 0; y < cols; y++) {
       if (imageArray2D[x][y]) {
         imageString += imageArray2D[x][y];
       }
