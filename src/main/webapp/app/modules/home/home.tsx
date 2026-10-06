@@ -7,21 +7,110 @@ import { Link } from 'react-router';
 
 import { useAppSelector } from 'app/config/store';
 
+import { Tabletojson } from 'tabletojson';
+
+const printImageFromTable = (firstTable): string => {
+  const arrayFromHtmlTable = firstTable.slice(0, firstTable.length);
+
+  let xLength = 0;
+  let yLength = 0;
+
+  // scan the arrayFromHtmlTable to set the dynamic dimension
+  for (let i = 1; i < arrayFromHtmlTable.length; i++) {
+    {
+      let x = Number(arrayFromHtmlTable[i][0]);
+      let y = Number(arrayFromHtmlTable[i][2]);
+      if (x > xLength) {
+        xLength = x;
+      }
+      if (y > yLength) {
+        yLength = y;
+      }
+    }
+  }
+
+  // initialize the 2D imageArray with empty string
+  const rows: number = yLength + 1;
+  const cols: number = xLength + 1;
+  const imageArray2D: string[][] = Array(rows)
+    .fill(null)
+    .map(() => Array(cols).fill(''));
+
+  // fill in the empty image if any found
+  for (let i = 1; i < arrayFromHtmlTable.length; i++) {
+    {
+      let x = arrayFromHtmlTable[i][0];
+      let y = arrayFromHtmlTable[i][2];
+      imageArray2D[Number(y)][Number(x)] = arrayFromHtmlTable[i][1];
+    }
+  }
+
+  // construct the image for printing/rendering
+  let imageStringFull = '';
+  for (let x = 2; x > -1; x--) {
+    let imageString = '';
+    for (let y = 0; y < 4; y++) {
+      if (imageArray2D[x][y]) {
+        imageString += imageArray2D[x][y];
+      }
+    }
+    imageStringFull += '\n' + imageString;
+  }
+
+  console.log(imageStringFull);
+
+  return imageStringFull;
+};
+
+const getTableByTabletojson = async () => {
+  const url =
+    'https://docs.google.com/document/u/0/d/e/2PACX-1vTMOmshQe8YvaRXi6gEPKKlsC6UpFJSMAk4mQjLm_u1gmHdVVTaeh7nBNFBRlui0sTZ-snGwZM4DBCT/pub?pli=1';
+
+  try {
+    console.log(`Fetching and parsing tables from: ${url}...`);
+
+    // Fetch and convert all tables on the webpage
+    const tables = await Tabletojson.convertUrl(url);
+
+    // Check if any tables were found
+    if (!tables || tables.length === 0) {
+      console.error('No tables found on this page.');
+      return;
+    }
+
+    console.log(`Successfully parsed ${tables.length} tables!\n`);
+
+    // Extract the first table found on the page
+    const firstTable = tables[0];
+
+    console.log(`firstTable.length ${firstTable.length}\n`);
+
+    printImageFromTable(firstTable);
+  } catch (error) {
+    console.error('Error fetching or parsing the HTML table:', error);
+  }
+};
+
+const PrintImageFromTable = () => {
+  getTableByTabletojson().then(r => {
+    console.log(`jd ok\n`);
+  });
+
+  const imageStringFull2 = 'jd testing';
+
+  return <div style={{ whiteSpace: 'pre-line' }}>{imageStringFull2}</div>;
+};
+
 export const Home = () => {
   const account = useAppSelector(state => state.authentication.account);
 
   return (
     <Row>
-      <Col md="3" className="pad">
-        <span className="hipster rounded" />
-      </Col>
       <Col md="9">
-        <h1 className="display-4">
-          <Translate contentKey="home.title">Welcome, Java Hipster!</Translate>
-        </h1>
-        <p className="lead">
-          <Translate contentKey="home.subtitle">This is your homepage</Translate>
-        </p>
+        <PrintImageFromTable />
+      </Col>
+
+      <Col md="9">
         {account?.login ? (
           <div>
             <Alert variant="success">
@@ -53,45 +142,6 @@ export const Home = () => {
             </Alert>
           </div>
         )}
-        <p>
-          <Translate contentKey="home.question">If you have any questions on JHipster:</Translate>
-        </p>
-
-        <ul>
-          <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.homepage">JHipster homepage</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.stackoverflow">JHipster on Stack Overflow</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.bugtracker">JHipster bug tracker</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.chat">JHipster public chat room</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.follow">follow @jhipster on Twitter</Translate>
-            </a>
-          </li>
-        </ul>
-
-        <p>
-          <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          !
-        </p>
       </Col>
     </Row>
   );
