@@ -85,20 +85,20 @@ const getTableByTabletojson = async () => {
 
     console.log(`firstTable.length ${firstTable.length}\n`);
 
-    printImageFromTable(firstTable);
+    return printImageFromTable(firstTable);
   } catch (error) {
     console.error('Error fetching or parsing the HTML table:', error);
   }
 };
 
-const PrintImageFromTable = () => {
+const PrintImageFromTableElement = () => {
   getTableByTabletojson().then(r => {
     console.log(`jd ok\n`);
   });
 
-  const imageStringFull2 = 'jd testing';
+  const imageStringFull = 'jd testing';
 
-  return <div style={{ whiteSpace: 'pre-line' }}>{imageStringFull2}</div>;
+  return <div style={{ whiteSpace: 'pre-line' }}>{imageStringFull}</div>;
 };
 
 export const Home = () => {
@@ -107,7 +107,7 @@ export const Home = () => {
   return (
     <Row>
       <Col md="9">
-        <PrintImageFromTable />
+        <PrintImageFromTableElement />
       </Col>
 
       <Col md="9">
