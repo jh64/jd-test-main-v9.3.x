@@ -34,7 +34,7 @@ const printImageFromTable = (firstTable): string => {
   const cols: number = xLength + 1;
   const imageArray2D: string[][] = Array(rows)
     .fill(null)
-    .map(() => Array(cols).fill(''));
+    .map(() => Array(cols).fill(' '));
 
   // fill in the empty image if any found
   for (let i = 1; i < arrayFromHtmlTable.length; i++) {
@@ -50,9 +50,7 @@ const printImageFromTable = (firstTable): string => {
   for (let x = rows - 1; x > -1; x--) {
     let imageString = '';
     for (let y = 0; y < cols; y++) {
-      if (imageArray2D[x][y]) {
-        imageString += imageArray2D[x][y];
-      }
+      imageString += imageArray2D[x][y];
     }
     imageStringFull += '\n' + imageString;
   }
