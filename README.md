@@ -7,4 +7,6 @@ Steps to run:
 3. Chrome to open URL:
    http://localhost:9000/jd-test-base/
 
+![](./image/Screenshot-2026-10-07.131821.png)
+
 ![](./image/Screenshot-2026-10-07.084437.png)
