@@ -9,6 +9,8 @@ import { useAppSelector } from 'app/config/store';
 
 import { Tabletojson } from 'tabletojson';
 
+let imageStringForRendering;
+
 const printImageFromTable = (firstTable): string => {
   const arrayFromHtmlTable = firstTable.slice(0, firstTable.length);
 
@@ -55,7 +57,7 @@ const printImageFromTable = (firstTable): string => {
     imageStringFull += '\n' + imageString;
   }
 
-  console.log(imageStringFull);
+  console.log('imageStringFull: ' + imageStringFull);
 
   return imageStringFull;
 };
@@ -83,20 +85,25 @@ const getTableByTabletojson = async () => {
 
     console.log(`firstTable.length ${firstTable.length}\n`);
 
-    return printImageFromTable(firstTable);
+    imageStringForRendering = printImageFromTable(firstTable);
   } catch (error) {
     console.error('Error fetching or parsing the HTML table:', error);
   }
 };
 
 const PrintImageFromTableElement = () => {
+  const testingPrompt = 'jd testing - please refresh to get the image';
   getTableByTabletojson().then(r => {
     console.log(`jd ok\n`);
   });
 
-  const imageStringFull = 'jd testing';
+  console.log('imageStringForRendering: ' + imageStringForRendering);
 
-  return <div style={{ whiteSpace: 'pre-line' }}>{imageStringFull}</div>;
+  if (imageStringForRendering) {
+    return <div style={{ whiteSpace: 'pre-line' }}>{imageStringForRendering}</div>;
+  } else {
+    return <div style={{ whiteSpace: 'pre-line' }}>{testingPrompt}</div>;
+  }
 };
 
 export const Home = () => {
